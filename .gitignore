@@ -23,3 +23,5 @@
 hs_err_pid*
 experiments/Exp1_TAP/.idea/
 *.iml
+experiments/Exp2_TAP/.idea/
+experiments/Exp2_TAP/target/

@@ -18,23 +18,12 @@ class NetworkParserTest {
     }
 
     @Test
-    public void parseMetadataLine(){
+    public void parseMetadataLine() {
         String line = "<NUMBER OF ZONES> 38";
 
-        Pattern p = Pattern.compile("\\<.*\\>");
-        Matcher m = p.matcher(line);
-
-        if(m.find()){
-            String match = m.group();
-            String data = line.replace(match, "").strip();
-            Assertions.assertEquals(match, "<NUMBER OF ZONES>");
-            Assertions.assertEquals(data, "38");
-        }else{
-            Assertions.fail();
-        }
-
-
-
+        networkParser.parseMetadataLine(line);
+        Assertions.assertTrue(networkParser.metadata.containsKey("<NUMBER OF ZONES>"));
+        Assertions.assertEquals("38", networkParser.metadata.get("<NUMBER OF ZONES>"));
     }
 
 

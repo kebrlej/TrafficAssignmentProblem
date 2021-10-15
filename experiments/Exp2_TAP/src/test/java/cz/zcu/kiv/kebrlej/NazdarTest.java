@@ -14,9 +14,11 @@ public class NazdarTest {
         Path path = Paths.get("../../networks/Anaheim/Anaheim_net.tntp");
         BufferedReader bfr =
                 new BufferedReader(new InputStreamReader(new FileInputStream(path.toString())));
-        bfr.readLine();
 
+        NetworkParser parser = new NetworkParser(null,null);
+        parser.readMetadata(bfr);
 
+        bfr.close();
     }
 
 }

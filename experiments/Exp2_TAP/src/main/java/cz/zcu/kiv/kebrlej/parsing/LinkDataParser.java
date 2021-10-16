@@ -1,4 +1,6 @@
-package cz.zcu.kiv.kebrlej;
+package cz.zcu.kiv.kebrlej.parsing;
+
+import cz.zcu.kiv.kebrlej.Link;
 
 public class LinkDataParser {
 
@@ -11,7 +13,7 @@ public class LinkDataParser {
             throw new LinkDataParsingException("Insufficient count of link parameters: " + line);
         }
 
-        //is first element empty?
+        //is first element empty? -> skip if it is
         int columnIndex = rowElements[0].strip().length() == 0 ? 1 : 0;
 
         Link link = createLink(rowElements, columnIndex);

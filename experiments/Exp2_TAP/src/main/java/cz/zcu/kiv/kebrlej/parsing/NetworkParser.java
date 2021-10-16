@@ -1,4 +1,6 @@
-package cz.zcu.kiv.kebrlej;
+package cz.zcu.kiv.kebrlej.parsing;
+
+import cz.zcu.kiv.kebrlej.Link;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,17 +33,17 @@ public class NetworkParser {
     private static final String FIRST_THRU_NODE_TAG = "<FIRST_THRU_NODE>";
     private static final String NUMBER_OF_LINKS_TAG = "<NUMBER_OF_LINKS>";
 
-    public Map<String, String> metadata = new HashMap<>();
+    public Map<String, String> networkMetadata = new HashMap<>();
     private List<Link> links = new ArrayList<>();
 
     public void parseMetadataLine(String line) {
-        Pattern p = Pattern.compile("\\<.*\\>");
-        Matcher m = p.matcher(line);
+        Pattern metadataTagPatter = Pattern.compile("\\<.*\\>");
+        Matcher matcher = metadataTagPatter.matcher(line);
 
-        if (m.find()) {
-            String match = m.group();
-            String data = line.replace(match, "").strip();
-            metadata.put(match, data);
+        if (matcher.find()) {
+            String match = matcher.group();
+            String metadataValue = line.replace(match, "").strip();
+            networkMetadata.put(match, metadataValue);
         }
     }
 
@@ -49,14 +51,17 @@ public class NetworkParser {
         return line.contains(NetworkParser.END_OF_METADATA_TAG);
     }
 
-    public void readMetadata(BufferedReader br) throws IOException {
+    public void parseNetworkMetadata(BufferedReader br) throws IOException {
         String line;
 
         while ((line = br.readLine()) != null
                 && !this.isEndOfMetadata(line)) {
             parseMetadataLine(line);
         }
+    }
 
+    public void parseNetworkData(BufferedReader br) throws IOException {
+        String line;
         while ((line = br.readLine()) != null) {
             if (line.trim().length() == 0 || line.contains("~")) {
                 //empty or comment line
@@ -70,9 +75,7 @@ public class NetworkParser {
                 }
             }
         }
-
     }
-
 
 
     public NetworkParser(String dir, String networkName) {

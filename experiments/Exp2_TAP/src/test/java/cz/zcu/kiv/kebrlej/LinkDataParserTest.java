@@ -1,5 +1,6 @@
 package cz.zcu.kiv.kebrlej;
 
+import cz.zcu.kiv.kebrlej.parsing.LinkDataParser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

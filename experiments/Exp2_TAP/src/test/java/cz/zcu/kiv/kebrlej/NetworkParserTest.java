@@ -1,5 +1,6 @@
 package cz.zcu.kiv.kebrlej;
 
+import cz.zcu.kiv.kebrlej.parsing.NetworkParser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -10,8 +11,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 class NetworkParserTest {
@@ -29,7 +28,8 @@ class NetworkParserTest {
         Path path = Paths.get("../../networks/Anaheim/Anaheim_net.tntp");
         BufferedReader bfr =
                 new BufferedReader(new InputStreamReader(new FileInputStream(path.toString())));
-        networkParser.readMetadata(bfr);
+        networkParser.parseNetworkMetadata(bfr);
+        networkParser.parseNetworkData(bfr);
         bfr.close();
     }
 
@@ -38,8 +38,8 @@ class NetworkParserTest {
         String line = "<NUMBER OF ZONES> 38";
 
         networkParser.parseMetadataLine(line);
-        Assertions.assertTrue(networkParser.metadata.containsKey("<NUMBER OF ZONES>"));
-        Assertions.assertEquals("38", networkParser.metadata.get("<NUMBER OF ZONES>"));
+        Assertions.assertTrue(networkParser.networkMetadata.containsKey("<NUMBER OF ZONES>"));
+        Assertions.assertEquals("38", networkParser.networkMetadata.get("<NUMBER OF ZONES>"));
     }
 
 

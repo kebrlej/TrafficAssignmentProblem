@@ -1,7 +1,7 @@
 package cz.zcu.kiv.kebrlej;
 
 import cz.zcu.kiv.kebrlej.parsing.MetadataParser;
-import cz.zcu.kiv.kebrlej.parsing.NetworkParser;
+import cz.zcu.kiv.kebrlej.parsing.NetFileParser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -16,12 +16,12 @@ import java.nio.file.Paths;
 
 class NetworkParserTest {
 
-    private static NetworkParser networkParser;
+    private static NetFileParser netFileParser;
     private static MetadataParser metadataParser;
 
     @BeforeAll
     public static void beforeAll(){
-        networkParser = new NetworkParser("zdar","anaheim");
+        netFileParser = new NetFileParser();
         metadataParser = new MetadataParser();
     }
 
@@ -32,7 +32,7 @@ class NetworkParserTest {
         BufferedReader bfr =
                 new BufferedReader(new InputStreamReader(new FileInputStream(path.toString())));
         metadataParser.parseAllMetadata(bfr);
-        networkParser.parseNetworkData(bfr);
+        netFileParser.parseNetworkData(bfr);
         bfr.close();
     }
 

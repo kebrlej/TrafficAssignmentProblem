@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class NetworkParser {
+public class NetFileParser {
 
 
     /*
@@ -49,16 +49,6 @@ public class NetworkParser {
                 }
             }
         }
-    }
-
-
-    public NetworkParser(String dir, String networkName) {
-
-//        if (!file.exists()) {
-//            throw new RuntimeException("Network file: " + filePath + "  not found!!!");
-//        }
-
-
     }
 
 }

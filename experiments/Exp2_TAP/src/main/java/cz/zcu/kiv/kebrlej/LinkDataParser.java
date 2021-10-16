@@ -8,11 +8,18 @@ public class LinkDataParser {
         String[] rowElements = line.split("\t");
 
         if (rowElements.length < 7) {
-            throw new LinkDataParsingException("Insufficient link parameters: " + line);
+            throw new LinkDataParsingException("Insufficient count of link parameters: " + line);
         }
 
+        //is first element empty?
         int columnIndex = rowElements[0].strip().length() == 0 ? 1 : 0;
 
+        Link link = createLink(rowElements, columnIndex);
+        return link;
+
+    }
+
+    private static Link createLink(String[] rowElements, int columnIndex) throws LinkDataParsingException {
         Link link = new Link();
 
         try {
@@ -26,13 +33,11 @@ public class LinkDataParser {
             link.setExponent(Double.parseDouble(rowElements[columnIndex++]));
             link.setSpeed(Double.parseDouble(rowElements[columnIndex++]));
 
-        }catch(NumberFormatException ex){
+        } catch (NumberFormatException ex) {
             throw new LinkDataParsingException(ex.getMessage());
         }
 
-        System.out.println(link.getCapacity());
         return link;
-
     }
 
 }

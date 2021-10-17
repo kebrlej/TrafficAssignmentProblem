@@ -14,7 +14,7 @@ public class Link {
 
     private double speed;
 
-    public double BPRFUnction(){
+    public double BPRFUnction() {
         return 0.0;
     }
 

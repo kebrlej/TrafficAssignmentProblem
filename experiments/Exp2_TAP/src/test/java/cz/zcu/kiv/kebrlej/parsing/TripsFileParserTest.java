@@ -1,9 +1,15 @@
 package cz.zcu.kiv.kebrlej.parsing;
 
-import cz.zcu.kiv.kebrlej.DestinationFlow;
+import cz.zcu.kiv.kebrlej.DestinationFlowPair;
+import cz.zcu.kiv.kebrlej.ODFlows;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 class TripsFileParserTest {
@@ -28,9 +34,26 @@ class TripsFileParserTest {
                 "   37 :      13.70;   38 :     107.70;";
 
         TripsFileParser tripsFileParser = new TripsFileParser();
-        List<DestinationFlow> destinationFlowList = tripsFileParser.parseDestinationFlows(line);
+        List<DestinationFlowPair> destinationFlowList = new ArrayList<>();
+        tripsFileParser.parseDestinationFlows(line, destinationFlowList);
 
         Assertions.assertEquals(37, destinationFlowList.size());
+    }
+
+    @Test
+    public void ReadFileTest() throws IOException, TntpParsingException {
+        String mapName = "Anaheim";
+
+        TripsFileParser tripsFileParser = new TripsFileParser();
+
+        Path tripsPath = Paths.get(FileParser.getTestResourcesAbsolutePath(), mapName + tripsFileParser.getTntpFileExtension());
+        BufferedReader bfr = tripsFileParser.prepareBufferedReader(tripsPath.toString());
+
+        MetadataParser.parseAllMetadata(bfr);
+        List<ODFlows> ODFlowsList = tripsFileParser.parseTripsData(bfr);
+
+        Assertions.assertEquals(1, ODFlowsList.get(0).getOriginId());
+        Assertions.assertEquals(1365.90, ODFlowsList.get(0).getDestFlows().get(0).getFlow());
     }
 
 }

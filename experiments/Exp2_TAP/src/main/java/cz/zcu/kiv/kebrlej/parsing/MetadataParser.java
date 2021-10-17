@@ -11,35 +11,33 @@ public class MetadataParser {
 
     private static final String END_OF_METADATA_TAG = "<END OF METADATA>";
 
-    private Map<String, String> parsedMetadata = new HashMap<>();
+    public static Map<String, String> parseAllMetadata(BufferedReader br) throws IOException, TntpParsingException {
 
-    public Map<String, String> getParsedMetadata() {
-        return parsedMetadata;
-    }
-
-    public void parseAllMetadata(BufferedReader br) throws IOException {
+        Map<String, String> metadata = new HashMap<>();
         String line;
-
         while ((line = br.readLine()) != null
-                && !this.isEndOfMetadata(line)) {
-
-            parseMetadataLine(line);
+                && !isEndOfMetadata(line)) {
+            Map.Entry<String, String> tagValuePair = parseMetadataLine(line);
+            metadata.put(tagValuePair.getKey(), tagValuePair.getValue());
         }
+        return metadata;
     }
 
-    public boolean isEndOfMetadata(String line) {
+    public static boolean isEndOfMetadata(String line) {
         return line.contains(END_OF_METADATA_TAG);
     }
 
 
-    public void parseMetadataLine(String line) {
+    public static Map.Entry<String, String> parseMetadataLine(String line) throws TntpParsingException {
         Pattern metadataTagPattern = Pattern.compile("\\<.*\\>");
         Matcher matcher = metadataTagPattern.matcher(line);
 
         if (matcher.find()) {
             String match = matcher.group();
             String metadataValue = line.replace(match, "").strip();
-            parsedMetadata.put(match, metadataValue);
+            return Map.entry(match, metadataValue);
+        } else {
+            throw new TntpParsingException("Unable to parse metadata line: " + line);
         }
     }
 

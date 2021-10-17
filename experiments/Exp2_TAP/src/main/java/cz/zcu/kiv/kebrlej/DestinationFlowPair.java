@@ -1,11 +1,11 @@
 package cz.zcu.kiv.kebrlej;
 
-public class DestinationFlow {
+public class DestinationFlowPair {
 
     private int destination;
     private double flow;
 
-    public DestinationFlow(int destination, double flow) {
+    public DestinationFlowPair(int destination, double flow) {
         this.destination = destination;
         this.flow = flow;
     }

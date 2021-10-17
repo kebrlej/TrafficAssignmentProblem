@@ -5,12 +5,12 @@ import cz.zcu.kiv.kebrlej.Link;
 public class LinkDataParser {
 
 
-    public static Link parseLinkData(String line) throws LinkDataParsingException {
+    public static Link parseLinkData(String line) throws TntpParsingException {
 
         String[] rowElements = line.split("\t");
 
         if (rowElements.length < 7) {
-            throw new LinkDataParsingException("Insufficient count of link parameters: " + line);
+            throw new TntpParsingException("Insufficient count of link parameters: " + line);
         }
 
         //is first element empty? -> skip if it is
@@ -21,7 +21,7 @@ public class LinkDataParser {
 
     }
 
-    private static Link createLink(String[] rowElements, int columnIndex) throws LinkDataParsingException {
+    private static Link createLink(String[] rowElements, int columnIndex) throws TntpParsingException {
         Link link = new Link();
 
         try {
@@ -36,7 +36,7 @@ public class LinkDataParser {
             link.setSpeed(Double.parseDouble(rowElements[columnIndex++]));
 
         } catch (NumberFormatException ex) {
-            throw new LinkDataParsingException(ex.getMessage());
+            throw new TntpParsingException(ex.getMessage());
         }
 
         return link;

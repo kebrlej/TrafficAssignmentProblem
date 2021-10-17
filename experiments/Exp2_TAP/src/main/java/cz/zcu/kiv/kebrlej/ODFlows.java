@@ -3,10 +3,10 @@ package cz.zcu.kiv.kebrlej;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OriginTrips {
+public class ODFlows {
 
     private int originId;
-    private List<DestinationFlow> destFlows = new ArrayList<>();
+    private List<DestinationFlowPair> destFlows = new ArrayList<>();
 
 
     public int getOriginId() {
@@ -17,11 +17,11 @@ public class OriginTrips {
         this.originId = originId;
     }
 
-    public List<DestinationFlow> getDestFlows() {
+    public List<DestinationFlowPair> getDestFlows() {
         return destFlows;
     }
 
-    public void setDestFlows(List<DestinationFlow> destFlows) {
+    public void setDestFlows(List<DestinationFlowPair> destFlows) {
         this.destFlows = destFlows;
     }
 }

@@ -7,9 +7,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NetFileParser {
+public class NetFileParser extends FileParser {
 
     private List<Link> links = new ArrayList<>();
+
+    @Override
+    protected String getTntpFileExtension() {
+        return "_net.tntp";
+    }
 
     public void parseNetworkData(BufferedReader br) throws IOException {
         String line;
@@ -17,10 +22,10 @@ public class NetFileParser {
             if (line.trim().length() == 0 || line.contains("~")) {
                 //empty or comment line
                 continue;
-            }else{
+            } else {
                 try {
                     links.add(LinkDataParser.parseLinkData(line));
-                } catch (LinkDataParsingException e) {
+                } catch (TntpParsingException e) {
                     e.printStackTrace();
                     break;
                 }
@@ -28,4 +33,7 @@ public class NetFileParser {
         }
     }
 
+    public List<Link> getLinks() {
+        return links;
+    }
 }

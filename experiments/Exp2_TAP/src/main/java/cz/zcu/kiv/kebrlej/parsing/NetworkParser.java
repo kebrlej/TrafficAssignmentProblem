@@ -13,11 +13,11 @@ import java.util.Map;
 
 public class NetworkParser {
 
-    Map<String, String> netMetadata;
-    List<Link> netLinks;
+    private Map<String, String> netMetadata;
+    private List<Link> netLinks;
 
-    Map<String,String> flowsMetadata;
-    List<ODFlows> ODFlowsList;
+    private Map<String,String> flowsMetadata;
+    private List<ODFlows> ODFlowsList;
 
 
     public void parseMap(String mapName) {
@@ -67,4 +67,19 @@ public class NetworkParser {
     }
 
 
+    public Map<String, String> getNetMetadata() {
+        return netMetadata;
+    }
+
+    public List<Link> getNetLinks() {
+        return netLinks;
+    }
+
+    public Map<String, String> getFlowsMetadata() {
+        return flowsMetadata;
+    }
+
+    public List<ODFlows> getODFlowsList() {
+        return ODFlowsList;
+    }
 }

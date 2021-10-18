@@ -14,6 +14,14 @@ public class Link {
 
     private double speed;
 
+    public Link(){}
+    public Link(int initNode, int termNode, int length){
+        this.initNode = initNode;
+        this.termNode = termNode;
+        this.length = length;
+    }
+
+
     public double BPRFUnction() {
         return 0.0;
     }

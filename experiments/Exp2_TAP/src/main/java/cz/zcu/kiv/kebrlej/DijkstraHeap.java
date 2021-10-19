@@ -2,6 +2,11 @@ package cz.zcu.kiv.kebrlej;
 
 import java.util.*;
 
+/*
+    Naive implementation of dijstra
+    - early stopping?
+
+ */
 public class DijkstraHeap {
 
     public PriorityQueue<NodeDistance> heap;
@@ -9,45 +14,66 @@ public class DijkstraHeap {
     Map<Integer, List<Link>> adjacencyMap;
 
     NodeDistance[] nodeObjects;
-    Boolean[] processed;
+    boolean[] processed;
     Integer[] predecessors;
+
+
+    public List<Link> extractShortestPath(Integer destination) {
+        List<Integer> pathNodes = new ArrayList<>();
+        pathNodes.add(destination);
+        Integer predecessor = predecessors[destination];
+        while (predecessor != -1) {
+            pathNodes.add(predecessor);
+            predecessor = predecessors[predecessor];
+        }
+        int pom = 0;
+
+        List<Link> shortestPath = new ArrayList<>();
+
+        for (int i = pathNodes.size()-1; i > 0; i--) {
+            Integer fromNode = pathNodes.get(i);
+            Integer destNode = pathNodes.get(i-1);
+
+            Link connectingLink = adjacencyMap.get(fromNode).stream()
+                    .filter(link -> link.getTermNode() == destNode)
+                    .findFirst().get();
+            shortestPath.add(connectingLink);
+        }
+
+        return shortestPath;
+    }
 
     public void findPaths(Integer startNode, Integer targetNode) {
         heap.remove(nodeObjects[startNode]);
         nodeObjects[startNode].distance = 0.0;
+        predecessors[startNode] = -1;
         heap.add(nodeObjects[startNode]);
 
-        int pom = 0;
         while (heap.isEmpty() == false) {
-            NodeDistance node = heap.poll();
-            processed[node.nodeId] = true;
-            List<Link> adjacentNodes = adjacencyMap.get(node.nodeId);
+            NodeDistance currentNode = heap.poll();
+            processed[currentNode.nodeId] = true;
+            List<Link> adjacentNodes = adjacencyMap.get(currentNode.nodeId);
 
             for (Link link : adjacentNodes) {
                 Integer destId = link.getTermNode();
 
                 if (processed[destId] == false) {
                     double destDistance = nodeObjects[destId].distance;
-                    double newPossibleDistance = node.distance + link.getLength();
-                    if (destDistance > node.distance + link.getLength()) {
+                    double newPossibleDistance = currentNode.distance + link.getLength();
+                    if (destDistance > currentNode.distance + link.getLength()) {
                         heap.remove(nodeObjects[destId]);
                         nodeObjects[destId].distance = newPossibleDistance;
                         heap.add(nodeObjects[destId]);
+                        predecessors[destId] = currentNode.nodeId;
                     }
                 }
-                /*
-                    1) get link term node
-                    2) check if this path is better than existing
-                        - better -> remove from heap, update distance, put in heap
-                        -
-
-                 */
-
+                int x = 0;
             }
+            int xx = 0;
 
 
         }
-
+        int pom = 0;
     }
 
     public DijkstraHeap(List<Link> links) {
@@ -64,7 +90,7 @@ public class DijkstraHeap {
         });
 
         heap = new PriorityQueue<>(adjacencyMap.keySet().size());
-        processed = new Boolean[adjacencyMap.size()];
+        processed = new boolean[adjacencyMap.size()];
         predecessors = new Integer[adjacencyMap.size()];
         nodeObjects = new NodeDistance[adjacencyMap.size()];
 

@@ -17,6 +17,18 @@ class NetworkParserTest {
     }
 
     @Test
+    public void myNetFileParseTest(){
+        String mapName = "testnet1";
+
+        NetworkParser np = new NetworkParser();
+
+        np.parseNetFile(mapName);
+
+        int pom = 0;
+    }
+
+
+    @Test
     public void parseMetadataLine() throws TntpParsingException {
         String testLine = "<NUMBER OF ZONES> 38";
 

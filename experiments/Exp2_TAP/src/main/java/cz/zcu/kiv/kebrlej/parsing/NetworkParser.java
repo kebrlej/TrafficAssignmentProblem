@@ -25,7 +25,7 @@ public class NetworkParser {
         parseNetFile(mapName);
     }
 
-    private void parseNetFile(String mapName) {
+    public void parseNetFile(String mapName) {
         NetFileParser netFileParser = new NetFileParser();
         Path netFilePath = Paths.get(FileParser.getTestResourcesAbsolutePath(), mapName + netFileParser.getTntpFileExtension());
 

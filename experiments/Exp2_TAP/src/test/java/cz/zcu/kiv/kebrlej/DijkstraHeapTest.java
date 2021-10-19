@@ -14,7 +14,6 @@ class DijkstraHeapTest {
         NetworkParser networkParser = new NetworkParser();
         networkParser.parseMap("Anaheim");
 
-//        return networkParser.getNet();
         return null;
     }
 
@@ -45,6 +44,7 @@ class DijkstraHeapTest {
 
         DijkstraHeap dh = new DijkstraHeap(links);
         dh.findPaths(0,4);
+        dh.extractShortestPath(4);
         int pom = 0;
     }
 

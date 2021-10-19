@@ -54,29 +54,33 @@ public class DijkstraHeap {
             processed[currentNode.nodeId] = true;
             List<Link> adjacentNodes = adjacencyMap.get(currentNode.nodeId);
 
-            for (Link link : adjacentNodes) {
-                Integer destId = link.getTermNode();
+            if(adjacentNodes != null){
+                int pom = 0;
+                for (Link link : adjacentNodes) {
+                    Integer destId = link.getTermNode();
 
-                if (processed[destId] == false) {
-                    double destDistance = nodeObjects[destId].distance;
-                    double newPossibleDistance = currentNode.distance + link.getLength();
-                    if (destDistance > currentNode.distance + link.getLength()) {
-                        heap.remove(nodeObjects[destId]);
-                        nodeObjects[destId].distance = newPossibleDistance;
-                        heap.add(nodeObjects[destId]);
-                        predecessors[destId] = currentNode.nodeId;
+                    if (processed[destId] == false) {
+                        double destDistance = nodeObjects[destId].distance;
+                        double newPossibleDistance = currentNode.distance + link.getLength();
+                        if (destDistance > currentNode.distance + link.getLength()) {
+                            heap.remove(nodeObjects[destId]);
+                            nodeObjects[destId].distance = newPossibleDistance;
+                            heap.add(nodeObjects[destId]);
+                            predecessors[destId] = currentNode.nodeId;
+                        }
                     }
+                    int x = 0;
                 }
-                int x = 0;
+                int xx = 0;
             }
-            int xx = 0;
+
 
 
         }
         int pom = 0;
     }
 
-    public DijkstraHeap(List<Link> links) {
+    public DijkstraHeap(List<Link> links,Integer nodeCount) {
         adjacencyMap = new HashMap<>();
 
         links.forEach(link -> {
@@ -89,16 +93,22 @@ public class DijkstraHeap {
             }
         });
 
-        heap = new PriorityQueue<>(adjacencyMap.keySet().size());
-        processed = new boolean[adjacencyMap.size()];
-        predecessors = new Integer[adjacencyMap.size()];
-        nodeObjects = new NodeDistance[adjacencyMap.size()];
+        heap = new PriorityQueue<>(nodeCount);
+        processed = new boolean[nodeCount];
+        predecessors = new Integer[nodeCount];
+        nodeObjects = new NodeDistance[nodeCount];
 
-        adjacencyMap.keySet().forEach(nodeId -> {
-            NodeDistance nodeDistance = new NodeDistance(nodeId, Double.POSITIVE_INFINITY);
+        for(int i = 0; i < nodeCount; i++){
+            NodeDistance nodeDistance = new NodeDistance(i, Double.POSITIVE_INFINITY);
             heap.add(nodeDistance);
-            nodeObjects[nodeId] = nodeDistance;
-        });
+            nodeObjects[i] = nodeDistance;
+        }
+//
+//        adjacencyMap.keySet().forEach(nodeId -> {
+//            NodeDistance nodeDistance = new NodeDistance(nodeId, Double.POSITIVE_INFINITY);
+//            heap.add(nodeDistance);
+//            nodeObjects[nodeId] = nodeDistance;
+//        });
 
         int pom = 0;
 

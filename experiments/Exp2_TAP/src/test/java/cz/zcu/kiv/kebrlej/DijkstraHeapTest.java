@@ -42,7 +42,7 @@ class DijkstraHeapTest {
         addEdge(links, 6, 8, 6);
         addEdge(links, 7, 8, 7);
 
-        DijkstraHeap dh = new DijkstraHeap(links);
+        DijkstraHeap dh = new DijkstraHeap(links,9);
         dh.findPaths(0,4);
         dh.extractShortestPath(4);
         int pom = 0;

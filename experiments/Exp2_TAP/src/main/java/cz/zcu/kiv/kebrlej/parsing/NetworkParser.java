@@ -25,6 +25,13 @@ public class NetworkParser {
         parseNetFile(mapName);
     }
 
+    public void normalizeNodeIds(Integer offset){
+        netLinks.forEach(link -> {
+            link.setInitNode(link.getInitNode()-offset);
+            link.setTermNode(link.getTermNode()-offset);
+        });
+    }
+
     public void parseNetFile(String mapName) {
         NetFileParser netFileParser = new NetFileParser();
         Path netFilePath = Paths.get(FileParser.getTestResourcesAbsolutePath(), mapName + netFileParser.getTntpFileExtension());

@@ -17,19 +17,41 @@ class FrankWolfeTest {
 
     @Test
     public void fwSimpleTest() {
+        prepareTestData();
+
+        int pom = 0;
         String mapName = "testnet1";
 
         NetworkParser np = new NetworkParser();
 
         np.parseNetFile(mapName);
+        np.normalizeNodeIds(5);
+
 
         List<ODPair> odFlows = new ArrayList<>();
-        odFlows.add(new ODPair(1,11,6000));
-        odFlows.add(new ODPair(1,13,6700));
-        odFlows.add(new ODPair(2,11,7500));
-        odFlows.add(new ODPair(2,13,5250));
+        odFlows.add(new ODPair(0,10,6000));
+        odFlows.add(new ODPair(0,12,6700));
+        odFlows.add(new ODPair(1,10,7500));
+        odFlows.add(new ODPair(1,12,5250));
 
-        int pom = 0;
+        FrankWolfe fw = new FrankWolfe(np,odFlows);
+        fw.solve();
+    }
+
+    private void prepareTestData() {
+        String mapName = "testnet1";
+
+        NetworkParser np = new NetworkParser();
+
+        np.parseNetFile(mapName);
+        np.normalizeNodeIds(5);
+
+
+        List<ODPair> odFlows = new ArrayList<>();
+        odFlows.add(new ODPair(0,10,6000));
+        odFlows.add(new ODPair(0,12,6700));
+        odFlows.add(new ODPair(1,10,7500));
+        odFlows.add(new ODPair(1,12,5250));
     }
 
 

@@ -2,6 +2,7 @@ package cz.zcu.kiv.kebrlej;
 
 
 import cz.zcu.kiv.kebrlej.parsing.TntpParser;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -44,7 +45,14 @@ class DijkstraHeapTest {
 
         DijkstraHeap dh = new DijkstraHeap(links,9);
         dh.findPaths(0,4);
-        dh.extractShortestPath(4);
+        List<Link> path = dh.extractShortestPath(4);
+
+        Assertions.assertEquals(4, path.size());
+        Assertions.assertEquals(7, path.get(0).getTermNode());
+        Assertions.assertEquals(6, path.get(1).getTermNode());
+        Assertions.assertEquals(5, path.get(2).getTermNode());
+        Assertions.assertEquals(4, path.get(3).getTermNode());
+
         int pom = 0;
     }
 

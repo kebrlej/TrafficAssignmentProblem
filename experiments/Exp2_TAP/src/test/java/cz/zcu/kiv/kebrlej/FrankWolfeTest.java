@@ -1,7 +1,7 @@
 package cz.zcu.kiv.kebrlej;
 
 
-import cz.zcu.kiv.kebrlej.parsing.NetworkParser;
+import cz.zcu.kiv.kebrlej.parsing.TntpParser;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ class FrankWolfeTest {
         int pom = 0;
         String mapName = "testnet1";
 
-        NetworkParser np = new NetworkParser();
+        TntpParser np = new TntpParser();
 
         np.parseNetFile(mapName);
         np.normalizeNodeIds(5);
@@ -41,7 +41,7 @@ class FrankWolfeTest {
     private void prepareTestData() {
         String mapName = "testnet1";
 
-        NetworkParser np = new NetworkParser();
+        TntpParser np = new TntpParser();
 
         np.parseNetFile(mapName);
         np.normalizeNodeIds(5);

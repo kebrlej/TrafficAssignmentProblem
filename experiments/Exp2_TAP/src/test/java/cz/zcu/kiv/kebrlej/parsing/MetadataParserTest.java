@@ -1,32 +1,11 @@
 package cz.zcu.kiv.kebrlej.parsing;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-
-class NetworkParserTest {
-
-    private static NetFileParser netFileParser;
-
-    @BeforeAll
-    static void beforeAll(){
-        netFileParser = new NetFileParser();
-    }
-
-    @Test
-    public void myNetFileParseTest(){
-        String mapName = "testnet1";
-
-        NetworkParser np = new NetworkParser();
-
-        np.parseNetFile(mapName);
-
-        int pom = 0;
-    }
-
+public class MetadataParserTest {
 
     @Test
     public void parseMetadataLine() throws TntpParsingException {

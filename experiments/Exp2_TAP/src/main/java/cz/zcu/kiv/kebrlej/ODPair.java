@@ -2,13 +2,13 @@ package cz.zcu.kiv.kebrlej;
 
 public class ODPair {
 
-    Integer origin;
-    Integer destination;
+    public Integer origin;
+    public Integer destination;
 
-    Integer flow;
+    public double flow;
 
 
-    public ODPair(Integer origin, Integer destination, Integer flow) {
+    public ODPair(Integer origin, Integer destination, double flow) {
         this.origin = origin;
         this.destination = destination;
         this.flow = flow;

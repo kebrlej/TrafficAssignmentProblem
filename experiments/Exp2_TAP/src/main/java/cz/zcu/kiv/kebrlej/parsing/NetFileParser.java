@@ -34,9 +34,7 @@ public class NetFileParser extends FileParser {
     }
 
     public static Link parseNetFileRow(String line) throws TntpParsingException {
-
         String[] rowElements = line.split("\t");
-
         if (rowElements.length < 7) {
             throw new TntpParsingException("Insufficient count of link parameters: " + line);
         }
@@ -44,9 +42,7 @@ public class NetFileParser extends FileParser {
         //is first element empty? -> skip if it is
         int columnIndex = rowElements[0].strip().length() == 0 ? 1 : 0;
 
-        Link link = createLink(rowElements, columnIndex);
-        return link;
-
+        return createLink(rowElements, columnIndex);
     }
 
     private static Link createLink(String[] rowElements, int columnIndex) throws TntpParsingException {

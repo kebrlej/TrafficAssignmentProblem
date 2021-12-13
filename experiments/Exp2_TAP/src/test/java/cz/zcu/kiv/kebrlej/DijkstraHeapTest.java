@@ -1,7 +1,7 @@
 package cz.zcu.kiv.kebrlej;
 
 
-import cz.zcu.kiv.kebrlej.parsing.NetworkParser;
+import cz.zcu.kiv.kebrlej.parsing.TntpParser;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -11,8 +11,8 @@ class DijkstraHeapTest {
 
 
     private List<Link> prepareAnaheimTestData() {
-        NetworkParser networkParser = new NetworkParser();
-        networkParser.parseMap("Anaheim");
+        TntpParser tntpParser = new TntpParser();
+        tntpParser.parseMap("Anaheim");
 
         return null;
     }

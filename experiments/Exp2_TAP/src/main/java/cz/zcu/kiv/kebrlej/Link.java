@@ -14,8 +14,21 @@ public class Link {
 
     private double speed;
 
-    public Link(){}
-    public Link(int initNode, int termNode, int length){
+    /**
+     * Calculation variables
+     */
+    public double currentFlow = 0;
+
+
+    public void updateCost() {
+        this.length = freeFlowTime * (1 + alfa * Math.pow(currentFlow / capacity, exponent));
+    }
+
+
+    public Link() {
+    }
+
+    public Link(int initNode, int termNode, int length) {
         this.initNode = initNode;
         this.termNode = termNode;
         this.length = length;

@@ -34,7 +34,7 @@ public class NetFileParser extends FileParser {
     }
 
     public static Link parseNetFileRow(String line) throws TntpParsingException {
-        String[] rowElements = line.split("\t");
+        String[] rowElements = line.split("[\t]+");
         if (rowElements.length < 7) {
             throw new TntpParsingException("Insufficient count of link parameters: " + line);
         }

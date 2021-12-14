@@ -4,7 +4,6 @@ public class Link {
 
     private int initNode;
     private int termNode;
-
     private double capacity;
     private double length;
     private double freeFlowTime;
@@ -14,6 +13,12 @@ public class Link {
 
     private double speed;
 
+    public double getCost() {
+        return cost;
+    }
+
+    private double cost;
+
     /**
      * Calculation variables
      */
@@ -21,17 +26,17 @@ public class Link {
 
 
     public void updateCost() {
-        this.length = freeFlowTime * (1 + alfa * Math.pow(currentFlow / capacity, exponent));
+        this.cost = freeFlowTime * (1 + alfa * Math.pow(currentFlow / capacity, exponent));
     }
 
 
     public Link() {
     }
 
-    public Link(int initNode, int termNode, int length) {
+    public Link(int initNode, int termNode, int cost) {
         this.initNode = initNode;
         this.termNode = termNode;
-        this.length = length;
+        this.cost = cost;
     }
 
 

@@ -2,6 +2,7 @@ package cz.zcu.kiv.kebrlej.parsing;
 
 import cz.zcu.kiv.kebrlej.Link;
 import cz.zcu.kiv.kebrlej.ODFlows;
+import cz.zcu.kiv.kebrlej.ODPair;
 import cz.zcu.kiv.kebrlej.ODPairSolution;
 
 import java.io.BufferedReader;
@@ -9,19 +10,19 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Flow;
 
 public class TntpParser {
 
     private Map<String, String> netMetadata;
     private List<Link> netLinks;
 
-    private Map<String,String> flowsMetadata;
+    private Map<String, String> flowsMetadata;
     private List<ODFlows> ODFlowsList;
 
-    private List<ODPairSolution> odSolutions;
+    private List<Link> odSolutions;
 
 
     public void parseMap(String mapName) {
@@ -30,10 +31,21 @@ public class TntpParser {
         parseFlowsFile(mapName);
     }
 
-    public void normalizeNodeIds(Integer offset){
+    public void normalizeNodeIds(Integer offset) {
         netLinks.forEach(link -> {
-            link.setInitNode(link.getInitNode()-offset);
-            link.setTermNode(link.getTermNode()-offset);
+            link.setInitNode(link.getInitNode() - offset);
+            link.setTermNode(link.getTermNode() - offset);
+        });
+
+        odSolutions.forEach(link -> {
+            link.setInitNode(link.getInitNode() - offset);
+            link.setTermNode(link.getTermNode() - offset);
+        });
+
+        ODFlowsList.forEach(odFlow -> {
+            odFlow.setOriginId(odFlow.getOriginId() - offset);
+            odFlow.getDestFlows().forEach(destFlow ->
+                    destFlow.setDestination(destFlow.getDestination() - offset));
         });
     }
 
@@ -78,7 +90,7 @@ public class TntpParser {
         }
     }
 
-    private void parseFlowsFile(String mapName){
+    private void parseFlowsFile(String mapName) {
         FlowFileParser flowFileParser = new FlowFileParser();
 
         Path tripsPath = Paths.get(FileParser.getTestResourcesAbsolutePath(), mapName + flowFileParser.getTntpFileExtension());
@@ -96,6 +108,19 @@ public class TntpParser {
         }
     }
 
+    public List<ODPair> getODPairs() {
+        List<ODPair> odPairs = new ArrayList<>();
+
+        this.getODFlowsList().forEach(odFlow -> {
+            Integer originId = odFlow.getOriginId();
+
+            odFlow.getDestFlows().forEach(destFlow -> {
+                odPairs.add(new ODPair(originId, destFlow.getDestination(), destFlow.getFlow()));
+            });
+        });
+
+        return odPairs;
+    }
 
     public Map<String, String> getNetMetadata() {
         return netMetadata;
@@ -111,5 +136,9 @@ public class TntpParser {
 
     public List<ODFlows> getODFlowsList() {
         return ODFlowsList;
+    }
+
+    public List<Link> getOdSolutions() {
+        return odSolutions;
     }
 }

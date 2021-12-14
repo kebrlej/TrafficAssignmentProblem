@@ -1,7 +1,6 @@
 package cz.zcu.kiv.kebrlej.parsing;
 
-import cz.zcu.kiv.kebrlej.ODFlows;
-import cz.zcu.kiv.kebrlej.ODPair;
+import cz.zcu.kiv.kebrlej.Link;
 import cz.zcu.kiv.kebrlej.ODPairSolution;
 
 import java.io.BufferedReader;
@@ -17,9 +16,9 @@ public class FlowFileParser extends FileParser {
          return "_flow.tntp";
     }
 
-    public List<ODPairSolution> parseFlowData(BufferedReader br) throws IOException, TntpParsingException {
+    public List<Link> parseFlowData(BufferedReader br) throws IOException, TntpParsingException {
 
-        List<ODPairSolution> odPairSolutions = new ArrayList<>();
+        List<Link> odPairSolutions = new ArrayList<>();
 
         br.readLine(); // skip first line
         String line;
@@ -35,19 +34,15 @@ public class FlowFileParser extends FileParser {
     }
 
 
-    public ODPairSolution parseFlowLine(String line) throws TntpParsingException {
+    public Link parseFlowLine(String line) throws TntpParsingException {
         String[] rowElements = line.split("\t");
         if(rowElements.length < 4){
             throw new TntpParsingException("Row does not contain all columns.");
         }
-
-        ODPairSolution odPairSolution = new ODPairSolution(
-                Integer.parseInt(rowElements[0].trim()),
-                Integer.parseInt(rowElements[1].trim()),
-                Double.parseDouble(rowElements[2].trim()),
-                Double.parseDouble(rowElements[3].trim())
-        );
-
-        return odPairSolution;
+        Link link = new Link();
+        link.setInitNode(Integer.parseInt(rowElements[0].trim()));
+        link.setTermNode(Integer.parseInt(rowElements[1].trim()));
+        link.currentFlow = Double.parseDouble(rowElements[2].trim());
+        return link;
     }
 }

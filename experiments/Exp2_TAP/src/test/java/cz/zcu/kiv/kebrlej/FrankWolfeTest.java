@@ -9,11 +9,20 @@ import java.util.List;
 
 class FrankWolfeTest {
 
-    /*
-    TODO:
-    - move numbering to index from 0
-    - check after first iteration
-     */
+
+    @Test
+    public void anaheimTest(){
+        String mapName = "Anaheim";
+
+        TntpParser np = new TntpParser();
+
+        np.parseMap(mapName);
+        np.normalizeNodeIds(1);
+        FrankWolfe fw = new FrankWolfe(np, np.getODPairs());
+        int pom = 0;
+        fw.solve(100);
+
+    }
 
     @Test
     public void fwSimpleTest() {
@@ -35,7 +44,7 @@ class FrankWolfeTest {
         odFlows.add(new ODPair(1,12,5250));
 
         FrankWolfe fw = new FrankWolfe(np,odFlows);
-        fw.solve();
+        fw.solve(10);
     }
 
     private void prepareTestData() {

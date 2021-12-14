@@ -13,10 +13,10 @@ public class DijkstraHeap {
     public PriorityQueue<NodeDistance> distanceHeap;
 
     List<List<Link>> neighbours;
+
     NodeDistance[] nodes;
     boolean[] visited;
     Integer[] predecessors;
-
 
     public List<Link> extractShortestPath(Integer destination) {
         List<Integer> pathNodes = new ArrayList<>();
@@ -51,6 +51,7 @@ public class DijkstraHeap {
         distanceHeap.add(nodes[startNode]);
 
         while (distanceHeap.isEmpty() == false) {
+            //retrieve and remove
             NodeDistance currentNode = distanceHeap.poll();
             visited[currentNode.nodeId] = true;
 
@@ -64,7 +65,7 @@ public class DijkstraHeap {
 
                 if (visited[neighbourId] == false) {
                     double currentBestDistance = nodes[neighbourId].distance;
-                    double newDistance = currentNode.distance + linkToNeighbour.getLength();
+                    double newDistance = currentNode.distance + linkToNeighbour.getCost();
                     if (currentBestDistance > newDistance) {
                         updateNodeHeap(currentNode, neighbourId, newDistance);
                     }
@@ -81,6 +82,20 @@ public class DijkstraHeap {
         nodes[nodeId].distance = newDistance;
         distanceHeap.add(nodes[nodeId]);
         predecessors[nodeId] = currentNode.nodeId;
+    }
+
+    public void reset(){
+        for (int i = 0; i < neighbours.size(); i++) {
+            visited[i] = false;
+            predecessors[i] = Integer.MIN_VALUE;
+        }
+
+        distanceHeap.clear();
+        for (int i = 0; i < neighbours.size(); i++) {
+            NodeDistance nodeDistance = new NodeDistance(i, Double.POSITIVE_INFINITY);
+            distanceHeap.add(nodeDistance);
+            nodes[i] = nodeDistance;
+        }
     }
 
     public DijkstraHeap(List<Link> links, Integer nodeCount) {

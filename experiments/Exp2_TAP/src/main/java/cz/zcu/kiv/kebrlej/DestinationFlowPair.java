@@ -10,6 +10,10 @@ public class DestinationFlowPair {
         this.flow = flow;
     }
 
+    public void setDestination(int destination) {
+        this.destination = destination;
+    }
+
     public int getDestination() {
         return destination;
     }
